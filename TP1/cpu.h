@@ -10,7 +10,7 @@ typedef struct
 } Instrucao;
 
 typedef struct {
-    float *items;
+    float *endereco;
     int tamanho;
 } Memoria;
 
