@@ -2,16 +2,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void inicia(Maquina *maquina, Instrucao *instrucoes, int tamanhoRAM)
+void liga(Maquina *maquina, Instrucao *instrucoes, int tamanhoRAM) // aloca a RAM
 {
     maquina->instrucoes = instrucoes; // lê instruções do usuário
-    maquina->RAM.endereco = (float *)malloc(tamanhoRAM * sizeof(float)); // aloca memória RAM
+    maquina->RAM.enderecos = (float *)malloc(tamanhoRAM * sizeof(float));
     maquina->RAM.tamanho = tamanhoRAM;
     for (int i = 0; i < tamanhoRAM; i++)
-        maquina->RAM.endereco[i] = (float)rand() / RAND_MAX; // aleatoriza o endereço da RAM para um numero decimal
+        maquina->RAM.enderecos[i] = (float)rand() / RAND_MAX; // aleatoriza o endereço da RAM para um numero decimal
 }
 
-void para(Maquina *maquina);
+void desliga(Maquina *maquina) // desaloca a RAM
+{
+    free(maquina->instrucoes);
+    free(maquina->RAM.enderecos);
+}
 
 void roda(Maquina *maquina);
 
