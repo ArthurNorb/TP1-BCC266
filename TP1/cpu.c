@@ -1,4 +1,5 @@
 #include "cpu.h"
+#include "operacoes.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,7 +19,35 @@ void desliga(Maquina *maquina) // desaloca a RAM
     free(maquina->RAM.enderecos);
 }
 
-void roda(Maquina *maquina);
+void roda(Maquina *maquina)
+{
+    int PC = 0;     // Contador de programa, permite executar as instruções em sequência
+    int opcode = 0; // para inicializar o loop de instruçoes
+    float valor, resultado;
+    float conteudoRAM1, conteudoRAM2; // informa o conteudo dos endereços 1 e 2
+
+    while (opcode != -1) // roda a máquina enquanto opcode é diferente de -1
+    {
+        Instrucao instrucao = maquina->instrucoes[PC]; // recebe a instrução
+        opcode = instrucao.opcode;                     // opcode atualiza com a instrução
+
+        switch (opcode)
+        {
+        case -1:
+            printf(" > Finalizando a execução.\n");
+            break;
+
+        case 0: // leva informação para a RAM
+            infoParaRAM(instrucao, maquina);
+            break;
+
+        case 1: // soma
+            break;
+        }
+        PC++;
+        // loop não chega ao fim.
+    }
+}
 
 void imprimeRAM(Maquina *maquina)
 {
