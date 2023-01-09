@@ -1,4 +1,5 @@
 #include "cpu.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -13,10 +14,15 @@ void liga(Maquina *maquina, Instrucao *instrucoes, int tamanhoRAM) // aloca a RA
 
 void desliga(Maquina *maquina) // desaloca a RAM
 {
-    //free(maquina->instrucoes);
+    // free(maquina->instrucoes);
     free(maquina->RAM.enderecos);
 }
 
 void roda(Maquina *maquina);
 
-void imprimeRAM(Maquina *);
+void imprimeRAM(Maquina *maquina)
+{
+    printf("  > RAM");
+    for (int i = 0; i < maquina->RAM.tamanho; i++)
+        printf("\t\t[%5d] : %f\n", i, maquina->RAM.enderecos[i]);
+}
