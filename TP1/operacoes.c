@@ -19,7 +19,7 @@ void soma(Instrucao instrucao, Maquina *maquina)
     float conteudoRAM1, conteudoRAM2;    // informa o conteudo dos endereços 1 e 2
     float resultado;
 
-    endereco1 = instrucao.info1;
+    endereco1 = instrucao.info1; 
     endereco2 = instrucao.info2;
     conteudoRAM1 = maquina->RAM.enderecos[endereco1];
     conteudoRAM2 = maquina->RAM.enderecos[endereco2];
