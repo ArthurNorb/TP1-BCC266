@@ -13,7 +13,7 @@ void liga(Maquina *maquina, Instrucao *instrucoes, int tamanhoRAM) // aloca a RA
 
 void desliga(Maquina *maquina) // desaloca a RAM
 {
-    free(maquina->instrucoes);
+    //free(maquina->instrucoes);
     free(maquina->RAM.enderecos);
 }
 
