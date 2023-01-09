@@ -10,7 +10,7 @@ typedef struct
 } Instrucao;
 
 typedef struct {
-    float *endereco;
+    float *enderecos;
     int tamanho;
 } Memoria;
 
@@ -19,9 +19,9 @@ typedef struct {
     Memoria RAM;
 } Maquina;
 
-void inicia(Maquina*, Instrucao*, int);
+void liga(Maquina*, Instrucao*, int);
 
-void para(Maquina*);
+void desliga(Maquina*);
 
 void roda(Maquina*);
 
