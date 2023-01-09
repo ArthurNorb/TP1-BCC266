@@ -9,7 +9,7 @@ typedef struct {
 } Instruction;
 
 typedef struct {
-    float *items;
+    float *items; //enderecos
     int size;
 } Memory;
 

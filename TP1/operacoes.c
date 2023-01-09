@@ -6,7 +6,7 @@ void infoParaRAM(Instrucao instrucao, Maquina *maquina)
 {
     float valor;
     int endereco1;
-
+ 
     valor = (float)instrucao.info1;
     endereco1 = instrucao.info2;
     maquina->RAM.enderecos[endereco1] = valor;
