@@ -10,7 +10,7 @@ void liga(Maquina *maquina, Instrucao *instrucoes, int tamanhoRAM) // aloca a RA
     maquina->RAM.enderecos = (float *)malloc(tamanhoRAM * sizeof(float));
     maquina->RAM.tamanho = tamanhoRAM;
     for (int i = 0; i < tamanhoRAM; i++)
-        maquina->RAM.enderecos[i] = (float)rand() / RAND_MAX; // aleatoriza o endereço da RAM para um numero decimal
+        maquina->RAM.enderecos[i] = (float)rand() / RAND_MAX; // aleatoriza o conteudo da RAM para um numero aleatório
 }
 
 void desliga(Maquina *maquina) // desaloca a RAM

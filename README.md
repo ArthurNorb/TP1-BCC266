@@ -8,3 +8,15 @@ A proposta do TP pode ser encontrada no arquivo TPI.pdf, que basicamente pede pa
 
 ## Source
 A pasta "Source" contém o código deixado pelo professor Pedro Silva para servir de base no nosso trabalho, o intuito é refazer sem copiar exatamente o que foi deixado pelo professor.
+
+## Compilação
+Para compilar e executar o programa, basta ir no terminal e usar os seguintes comandos:
+> $ make all
+> $ ./exe
+Ou se preferir pode compilar do modo padrão:
+> $ gcc -c operacoes.c -Wall
+> $ gcc -c cpu.c -Wall
+> $ gcc -c main.c -Wall
+> $ gcc operacoes.o cpu.o main.o -o exe
+> $ ./exe
+
