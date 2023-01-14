@@ -82,7 +82,7 @@ void menu(Maquina *maquina)
     float num1, num2;
 
     printf("\nMENU:\n\n");
-    printf("Escolha uma opção abaixo:\n0-Programa Aleatório\n1-Multiplicação\n\n");
+    printf("Escolha uma opção abaixo:\n0 - Programa Aleatório\n1 - Adição\n2 - Subtração\n3 - Multiplicação\n\n");
     scanf("%d", &opcao_menu);
     Instrucao *instrucao;
 
@@ -96,19 +96,46 @@ void menu(Maquina *maquina)
         imprimeRAM(maquina);
         roda(maquina);
         break;
-
-    case 1: // Multiplicação
+    case 1: // adição
         // coloca os numeros do usuário na memória
-        printf("Digite os 2 numeros que deseja multiplicar");
+        printf("Digite os 2 numeros que deseja somar: ");
         scanf("%f%f", &num1, &num2);
 
         instrucao = instrucaoDoUsuario(maquina, 1); // recebe instrução do usuário
+        tamanhoRAM = 3;
 
+        liga(maquina, instrucao, tamanhoRAM);
+        maquina->RAM.enderecos[0] = num1; // altera o conteúdo da RAM
+        maquina->RAM.enderecos[1] = num2;
+        imprimeRAM(maquina);
+        roda(maquina);
+        break;
+
+    case 2: // subtração
+        printf("Digite os 2 numeros que deseja somar: ");
+        scanf("%f%f", &num1, &num2);
+
+        instrucao = instrucaoDoUsuario(maquina, 2); // recebe instrução do usuário
         tamanhoRAM = 3;
 
         liga(maquina, instrucao, tamanhoRAM);
         maquina->RAM.enderecos[0] = num1;
         maquina->RAM.enderecos[1] = num2;
+        imprimeRAM(maquina);
+        roda(maquina);
+        break;
+
+    case 3: // Multiplicação
+        printf("Digite os 2 numeros que deseja multiplicar: ");
+        scanf("%f%f", &num1, &num2);
+
+        instrucao = instrucaoDoUsuario(maquina, 1);
+        tamanhoRAM = 3;
+
+        liga(maquina, instrucao, tamanhoRAM);
+        maquina->RAM.enderecos[0] = num1;
+        maquina->RAM.enderecos[1] = num2;
+        maquina->RAM.enderecos[2] = 0; // zerando info3
         imprimeRAM(maquina);
         multiplicacao(maquina);
         break;
@@ -140,6 +167,7 @@ Instrucao *instrucaoAleatoriaTeste(Maquina *maquina)
     instrucaoFinal.opcode = -1;
     instrucaoFinal.info1 = -1;
     instrucaoFinal.info2 = -1;
+    // pega o módulo dos numeros
     instrucaoFinal.info3 = -1;
 
     instrucoes[0] = instrucao01;
