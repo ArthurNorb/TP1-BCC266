@@ -3,5 +3,6 @@
 
 #include "cpu.h"
 
+void multiplicacao(Maquina *);
 
 #endif // OPERACOES_H

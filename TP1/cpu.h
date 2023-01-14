@@ -5,27 +5,35 @@ typedef struct
 {
     int opcode;
     int info1;
-    int info2; 
-    int info3; 
+    int info2;
+    int info3;
 } Instrucao;
 
-typedef struct {
+typedef struct
+{
     float *enderecos;
     int tamanho;
 } Memoria;
 
-typedef struct {
-    Instrucao* instrucoes;
+typedef struct
+{
+    Instrucao *instrucoes;
     Memoria RAM;
 } Maquina;
 
-void liga(Maquina*, Instrucao*, int);
+void liga(Maquina *, Instrucao *, int);
 
-void desliga(Maquina*);
+void desliga(Maquina *);
 
-void roda(Maquina*);
+void roda(Maquina *);
 
-void imprimeRAM(Maquina*);
-//basicamente uma cópia da source
+void imprimeRAM(Maquina *);
+// basicamente uma cópia da source
+
+void menu(Maquina *);
+
+Instrucao *instrucaoAleatoriaTeste(Maquina *);
+
+Instrucao *instrucaoDoUsuario(Maquina *, int);
 
 #endif // CPU_H
