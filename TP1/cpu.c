@@ -103,11 +103,12 @@ void menu(Maquina *maquina)
         scanf("%f%f", &num1, &num2);
 
         instrucao = instrucaoDoUsuario(maquina, 1); // recebe instrução do usuário
-        maquina->RAM.enderecos[0] = num1;
-        maquina->RAM.enderecos[1] = num2;
+
         tamanhoRAM = 3;
 
         liga(maquina, instrucao, tamanhoRAM);
+        maquina->RAM.enderecos[0] = num1;
+        maquina->RAM.enderecos[1] = num2;
         imprimeRAM(maquina);
         multiplicacao(maquina);
         break;

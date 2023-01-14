@@ -5,6 +5,8 @@
 
 void multiplicacao(Maquina *maquina)
 {
+
+
     float num1 = maquina->RAM.enderecos[0];
     float num2 = maquina->RAM.enderecos[1];
     float resultado;
