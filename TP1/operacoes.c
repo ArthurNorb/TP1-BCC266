@@ -2,6 +2,7 @@
 #include "cpu.h"
 
 #include <stdio.h>
+#include <math.h>
 
 float multiplicacao(Maquina *maquina)
 {
@@ -69,7 +70,9 @@ float divisao(Maquina *maquina)
 
     float resto = num1_mod;
     float quociente;
-    while (num1_mod != 0)
+    int contadorDecimais = 0;
+    int k = 0;
+    while ((num1_mod != 0) && (contadorDecimais <= 5))
     {
         // adiciona 0 no final do dividendo quando for menor que o divisor
         if (num1_mod < num2_mod)
@@ -81,6 +84,8 @@ float divisao(Maquina *maquina)
             maquina->RAM.enderecos[1] = num2_mod;
             num1_mod = maquina->RAM.enderecos[2];
             maquina->RAM.enderecos[2] = 0; // zera novamente o resultado
+            contadorDecimais++;
+            k++;
         }
 
         // procura o valor do quociente
@@ -98,16 +103,23 @@ float divisao(Maquina *maquina)
                 resto = num1_mod - (num2_mod * quociente);
                 break;
             }
-
         }
 
         num1_mod = resto;
+        printf("%f", resto);
     }
 
-    resultado = quociente;
+    if (k == 0)
+    {
+        resultado = quociente;
+    }
+    else
+        resultado = quociente * pow(0.1, k);
 
     if ((num1 < 0 && num2 > 0) || (num1 > 0 && num2 < 0))
         resultado = -resultado;
+    
+    maquina->RAM.enderecos[2] = resultado;
 
     return resultado;
 }
