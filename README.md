@@ -18,11 +18,13 @@ Para compilar e executar o programa, basta ir no terminal e usar os seguintes co
 Ou se preferir pode compilar do modo padrão:
 > $ gcc -c operacoes.c -Wall
 
+> $ gcc -c gerador.c -Wall
+
 > $ gcc -c cpu.c -Wall
 
 > $ gcc -c main.c -Wall
 
-> $ gcc operacoes.o cpu.o main.o -o exe
+> $ gcc operacoes.o gerador.o cpu.o main.o -o exe
 
 > $ ./exe
 
