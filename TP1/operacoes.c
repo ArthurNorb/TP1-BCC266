@@ -67,10 +67,11 @@ float divisao(Maquina *maquina)
     else
         num2_mod = num2;
 
-    float resto, quociente;
-    while (resto != 0)
+    float resto = num1_mod;
+    float quociente;
+    while (num1_mod != 0)
     {
-        // adiciona 0 no final do dividendo
+        // adiciona 0 no final do dividendo quando for menor que o divisor
         if (num1_mod < num2_mod)
         {
             maquina->instrucoes->opcode = 1;
@@ -78,30 +79,32 @@ float divisao(Maquina *maquina)
             num1_mod = multiplicacao(maquina);
             maquina->instrucoes->opcode = 2;
             maquina->RAM.enderecos[1] = num2_mod;
+            num1_mod = maquina->RAM.enderecos[2];
             maquina->RAM.enderecos[2] = 0; // zera novamente o resultado
         }
 
-        maquina->instrucoes->opcode = 1;
-        for (int i = 1; i <= num1_mod; i++)
+        // procura o valor do quociente
+        for (int i = 0; i < num1_mod; i++)
         {
-            maquina->RAM.enderecos[0] = i;
-            if (multiplicacao(maquina) == num1_mod)
+            if (num2_mod * i == num1_mod)
+            {
                 quociente = i;
-                i = num1_mod; // acaba o for
-            if (multiplicacao(maquina) > num1_mod)
+                resto = 0;
+                break;
+            }
+            if (num2_mod * i > num1_mod)
+            {
                 quociente = i - 1;
-                i = num1_mod;
+                resto = num1_mod - (num2_mod * quociente);
+                break;
+            }
+
         }
 
-        maquina->instrucoes->opcode = 2;
-        maquina->RAM.enderecos[0] = num1_mod;
-        maquina->RAM.enderecos[1] = quociente;
-        roda(maquina);
-        resto = maquina->RAM.enderecos[2]; 
-
+        num1_mod = resto;
     }
 
-    resultado = maquina->RAM.enderecos[0];
+    resultado = quociente;
 
     if ((num1 < 0 && num2 > 0) || (num1 > 0 && num2 < 0))
         resultado = -resultado;

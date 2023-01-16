@@ -30,7 +30,7 @@ void roda(Maquina *);
 void imprimeRAM(Maquina *);
 // basicamente uma cópia da source
 
-void menu(Maquina *);
+void menu(Maquina *, char**);
 
 Instrucao *instrucaoAleatoriaTeste(Maquina *);
 

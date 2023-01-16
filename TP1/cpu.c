@@ -1,8 +1,10 @@
 #include "cpu.h"
 #include "operacoes.h"
+#include "gerador.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void liga(Maquina *maquina, Instrucao *instrucoes, int tamanhoRAM) // aloca a RAM
 {
@@ -71,95 +73,109 @@ void roda(Maquina *maquina)
 
 void imprimeRAM(Maquina *maquina)
 {
-    printf("  > RAM");
+    printf("\n  > RAM");
     for (int i = 0; i < maquina->RAM.tamanho; i++)
         printf("\t\t[%5d] : %f\n", i, maquina->RAM.enderecos[i]);
 }
 
-void menu(Maquina *maquina)
+void menu(Maquina *maquina, char **argv)
 {
     int opcao_menu, tamanhoRAM;
     float num1, num2, resultado;
-
-    printf("\nMENU:\n\n");
-    printf("Escolha uma opção abaixo:\n0 - Programa Aleatório\n1 - Adição\n2 - Subtração\n3 - Multiplicação\n4- Divisão\n");
-    scanf("%d", &opcao_menu);
     Instrucao *instrucao;
 
-    switch (opcao_menu)
+    // lê instruções de compilação
+    if (strcmp(argv[1], "random") == 0)
     {
-    case 0:                                           // Programa Aleatório
-        instrucao = instrucaoAleatoriaTeste(maquina); // "gera" instrução aleatoria
-        tamanhoRAM = 6;
+        tamanhoRAM = atoi(argv[2]);
+        instrucao = geraInstrucoesAleatorias(tamanhoRAM);
+    }
+    else /*if (strcmp(argv[1], "file") == 0)
+    {
+        instrucao = leInstrucoes(argv[2], &tamanhoRAM);
+    }
+    else */if (strcmp(argv[1], "menu") == 0)
+    {
+        tamanhoRAM = atoi(argv[2]);
 
-        liga(maquina, instrucao, tamanhoRAM);
-        imprimeRAM(maquina);
-        roda(maquina);
-        break;
-    case 1: // Adição
-        // coloca os numeros do usuário na memória
-        printf("Digite os 2 numeros que deseja somar: ");
-        scanf("%f%f", &num1, &num2);
+        printf("\nMENU:\n\n");
+        printf("Escolha uma opção abaixo:\n0 - Programa Aleatório\n1 - Adição\n2 - Subtração\n3 - Multiplicação\n4 - Divisão\n");
+        scanf("%d", &opcao_menu);
 
-        instrucao = instrucaoDoUsuario(maquina, 1); // recebe instrução do usuário
-        tamanhoRAM = 3;
+        switch (opcao_menu)
+        {
+        case 0: // Programa Aleatório
+            instrucao = geraInstrucoesAleatorias(tamanhoRAM);
 
-        liga(maquina, instrucao, tamanhoRAM);
-        maquina->RAM.enderecos[0] = num1; // altera o conteúdo da RAM
-        maquina->RAM.enderecos[1] = num2;
-        imprimeRAM(maquina);
-        roda(maquina);
-        break;
+            liga(maquina, instrucao, tamanhoRAM);
+            imprimeRAM(maquina);
+            roda(maquina);
+            break;
+        case 1: // Adição
+            // coloca os numeros do usuário na memória
+            printf("\nDigite os 2 numeros que deseja somar: ");
+            scanf("%f%f", &num1, &num2);
 
-    case 2: // Subtração
-        printf("Digite os 2 numeros que deseja somar: ");
-        scanf("%f%f", &num1, &num2);
+            instrucao = instrucaoDoUsuario(maquina, 1); // recebe instrução do usuário
+            tamanhoRAM = 3;
 
-        instrucao = instrucaoDoUsuario(maquina, 2); 
-        tamanhoRAM = 3;
+            liga(maquina, instrucao, tamanhoRAM);
+            maquina->RAM.enderecos[0] = num1; // altera o conteúdo da RAM
+            maquina->RAM.enderecos[1] = num2;
+            imprimeRAM(maquina);
+            roda(maquina);
+            break;
 
-        liga(maquina, instrucao, tamanhoRAM);
-        maquina->RAM.enderecos[0] = num1;
-        maquina->RAM.enderecos[1] = num2;
-        imprimeRAM(maquina);
-        roda(maquina);
-        break;
+        case 2: // Subtração
+            printf("\nDigite os 2 numeros que deseja somar: ");
+            scanf("%f%f", &num1, &num2);
 
-    case 3: // Multiplicação
-        printf("Digite os 2 numeros que deseja multiplicar: ");
-        scanf("%f%f", &num1, &num2);
+            instrucao = instrucaoDoUsuario(maquina, 2);
+            tamanhoRAM = 3;
 
-        instrucao = instrucaoDoUsuario(maquina, 1);
-        tamanhoRAM = 3;
+            liga(maquina, instrucao, tamanhoRAM);
+            maquina->RAM.enderecos[0] = num1;
+            maquina->RAM.enderecos[1] = num2;
+            imprimeRAM(maquina);
+            roda(maquina);
+            break;
 
-        liga(maquina, instrucao, tamanhoRAM);
-        maquina->RAM.enderecos[0] = num1;
-        maquina->RAM.enderecos[1] = num2;
-        maquina->RAM.enderecos[2] = 0; // zerando info3
-        imprimeRAM(maquina);
-        resultado = multiplicacao(maquina);
-        printf("  > Multiplicado RAM[%d] (%f) com RAM[%d] (%f) e salvo na RAM[%d] (%f).\n", 0, num1, 1, num2, 2, resultado);
-        break;
+        case 3: // Multiplicação
+            printf("\nDigite os 2 numeros que deseja multiplicar: ");
+            scanf("%f%f", &num1, &num2);
 
-    case 4: // Divisão
-        printf("Digite os 2 numeros que deseja dividir: ");
-        scanf("%f%f", &num1, &num2);
+            instrucao = instrucaoDoUsuario(maquina, 1);
+            tamanhoRAM = 3;
 
-        instrucao = instrucaoDoUsuario(maquina, 2);
-        tamanhoRAM = 3;
+            liga(maquina, instrucao, tamanhoRAM);
+            maquina->RAM.enderecos[0] = num1;
+            maquina->RAM.enderecos[1] = num2;
+            maquina->RAM.enderecos[2] = 0; // zerando info3
+            imprimeRAM(maquina);
+            resultado = multiplicacao(maquina);
+            printf("\n  > Multiplicado RAM[%d] (%f) com RAM[%d] (%f) e salvo na RAM[%d] (%f).\n", 0, num1, 1, num2, 2, resultado);
+            break;
 
-        liga(maquina, instrucao, tamanhoRAM);
-        maquina->RAM.enderecos[0] = num1;
-        maquina->RAM.enderecos[1] = num2;
-        maquina->RAM.enderecos[2] = 0;
-        imprimeRAM(maquina);
-        resultado = divisao(maquina);
-        printf("  > DIvidido RAM[%d] (%f) com RAM[%d] (%f) e salvo na RAM[%d] (%f).\n", 0, num1, 1, num2, 2, resultado);
-        break;
-    default:
-        printf("Erro grave... finalizando.");
-        exit(1);
-        break;
+        case 4: // Divisão
+            printf("\nDigite os 2 numeros que deseja dividir: ");
+            scanf("%f%f", &num1, &num2);
+
+            instrucao = instrucaoDoUsuario(maquina, 2);
+            tamanhoRAM = 3;
+
+            liga(maquina, instrucao, tamanhoRAM);
+            maquina->RAM.enderecos[0] = num1;
+            maquina->RAM.enderecos[1] = num2;
+            maquina->RAM.enderecos[2] = 0;
+            imprimeRAM(maquina);
+            resultado = divisao(maquina);
+            printf("\n  > Dividido RAM[%d] (%f) com RAM[%d] (%f) e salvo na RAM[%d] (%f).\n\n", 0, num1, 1, num2, 2, resultado);
+            break;
+        default:
+            printf("Erro grave... finalizando.");
+            exit(1);
+            break;
+        }
     }
 }
 
