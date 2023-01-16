@@ -28,10 +28,12 @@ Ou se preferir pode compilar do modo padrão:
 Para poder executar o aquivo você tem 3 opções:
 ### Programa Aleatório
 > $ ./exe random 10
+
 O número "10" representa o tamanho da memória RAM.
 ### Importar arquivo
 > $ ./exe file arquivo_de_instrucoes.txt
 ### Abrir o Menu
 > $ ./exe menu 10
+
 o número "10" representa o tamanho da memória RAM.
 
