@@ -11,18 +11,29 @@ A pasta "Source" contém o código deixado pelo professor Pedro Silva para servi
 
 ## Compilação
 Para compilar e executar o programa, basta ir no terminal e usar os seguintes comandos:
-> $ make all
-
-> $ ./exe
+> make all
 
 Ou se preferir pode compilar do modo padrão:
-> $ gcc -c operacoes.c -Wall
+> gcc -c operacoes.c -Wall
 
-> $ gcc -c cpu.c -Wall
+> gcc -c gerador.c -Wall
 
-> $ gcc -c main.c -Wall
+> gcc -c cpu.c -Wall
 
-> $ gcc operacoes.o cpu.o main.o -o exe
+> gcc -c main.c -Wall
 
-> $ ./exe
+> gcc operacoes.o gerador.o cpu.o main.o -o exe
+
+## Execução
+Para poder executar o aquivo você tem 3 opções:
+### Programa Aleatório
+> ./exe random 10
+
+O número "10" representa o tamanho da memória RAM.
+### Importar arquivo
+> ./exe file arquivo_de_instrucoes.txt
+### Abrir o Menu
+> ./exe menu 10
+
+o número "10" representa o tamanho da memória RAM.
 
