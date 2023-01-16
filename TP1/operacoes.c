@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-void multiplicacao(Maquina *maquina)
+float multiplicacao(Maquina *maquina)
 {
     float resultado;
     float num1 = maquina->RAM.enderecos[0];
@@ -40,5 +40,71 @@ void multiplicacao(Maquina *maquina)
     if ((num1 < 0 && num2 > 0) || (num1 > 0 && num2 < 0))
         resultado = -resultado;
 
-    printf("  > Multiplicado RAM[%d] (%f) com RAM[%d] (%f) e salvo na RAM[%d] (%f).\n", 0, num1, 1, num2, 2, resultado);
+    return resultado;
+}
+
+float divisao(Maquina *maquina)
+{
+    float resultado;
+    float num1 = maquina->RAM.enderecos[0];
+    float num2 = maquina->RAM.enderecos[1];
+    if (num1 == 0 || num2 == 0)
+        resultado = 0;
+
+    float num1_mod, num2_mod;
+    if (num1 < 0)
+    {
+        num1_mod = -num1;
+        maquina->RAM.enderecos[0] = num1_mod;
+    }
+    else
+        num1_mod = num1;
+    if (num2 < 0)
+    {
+        num2_mod = -num2;
+        maquina->RAM.enderecos[1] = num2_mod;
+    }
+    else
+        num2_mod = num2;
+
+    float resto, quociente;
+    while (resto != 0)
+    {
+        // adiciona 0 no final do dividendo
+        if (num1_mod < num2_mod)
+        {
+            maquina->instrucoes->opcode = 1;
+            maquina->RAM.enderecos[1] = 10;
+            num1_mod = multiplicacao(maquina);
+            maquina->instrucoes->opcode = 2;
+            maquina->RAM.enderecos[1] = num2_mod;
+            maquina->RAM.enderecos[2] = 0; // zera novamente o resultado
+        }
+
+        maquina->instrucoes->opcode = 1;
+        for (int i = 1; i <= num1_mod; i++)
+        {
+            maquina->RAM.enderecos[0] = i;
+            if (multiplicacao(maquina) == num1_mod)
+                quociente = i;
+                i = num1_mod; // acaba o for
+            if (multiplicacao(maquina) > num1_mod)
+                quociente = i - 1;
+                i = num1_mod;
+        }
+
+        maquina->instrucoes->opcode = 2;
+        maquina->RAM.enderecos[0] = num1_mod;
+        maquina->RAM.enderecos[1] = quociente;
+        roda(maquina);
+        resto = maquina->RAM.enderecos[2]; 
+
+    }
+
+    resultado = maquina->RAM.enderecos[0];
+
+    if ((num1 < 0 && num2 > 0) || (num1 > 0 && num2 < 0))
+        resultado = -resultado;
+
+    return resultado;
 }

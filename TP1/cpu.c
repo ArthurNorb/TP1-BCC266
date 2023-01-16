@@ -79,10 +79,10 @@ void imprimeRAM(Maquina *maquina)
 void menu(Maquina *maquina)
 {
     int opcao_menu, tamanhoRAM;
-    float num1, num2;
+    float num1, num2, resultado;
 
     printf("\nMENU:\n\n");
-    printf("Escolha uma opção abaixo:\n0 - Programa Aleatório\n1 - Adição\n2 - Subtração\n3 - Multiplicação\n\n");
+    printf("Escolha uma opção abaixo:\n0 - Programa Aleatório\n1 - Adição\n2 - Subtração\n3 - Multiplicação\n4- Divisão\n");
     scanf("%d", &opcao_menu);
     Instrucao *instrucao;
 
@@ -96,7 +96,7 @@ void menu(Maquina *maquina)
         imprimeRAM(maquina);
         roda(maquina);
         break;
-    case 1: // adição
+    case 1: // Adição
         // coloca os numeros do usuário na memória
         printf("Digite os 2 numeros que deseja somar: ");
         scanf("%f%f", &num1, &num2);
@@ -111,11 +111,11 @@ void menu(Maquina *maquina)
         roda(maquina);
         break;
 
-    case 2: // subtração
+    case 2: // Subtração
         printf("Digite os 2 numeros que deseja somar: ");
         scanf("%f%f", &num1, &num2);
 
-        instrucao = instrucaoDoUsuario(maquina, 2); // recebe instrução do usuário
+        instrucao = instrucaoDoUsuario(maquina, 2); 
         tamanhoRAM = 3;
 
         liga(maquina, instrucao, tamanhoRAM);
@@ -137,10 +137,26 @@ void menu(Maquina *maquina)
         maquina->RAM.enderecos[1] = num2;
         maquina->RAM.enderecos[2] = 0; // zerando info3
         imprimeRAM(maquina);
-        multiplicacao(maquina);
+        resultado = multiplicacao(maquina);
+        printf("  > Multiplicado RAM[%d] (%f) com RAM[%d] (%f) e salvo na RAM[%d] (%f).\n", 0, num1, 1, num2, 2, resultado);
+        break;
+
+    case 4: // Divisão
+        printf("Digite os 2 numeros que deseja dividir: ");
+        scanf("%f%f", &num1, &num2);
+
+        instrucao = instrucaoDoUsuario(maquina, 2);
+        tamanhoRAM = 3;
+
+        liga(maquina, instrucao, tamanhoRAM);
+        maquina->RAM.enderecos[0] = num1;
+        maquina->RAM.enderecos[1] = num2;
+        maquina->RAM.enderecos[2] = 0;
+        imprimeRAM(maquina);
+        resultado = divisao(maquina);
+        printf("  > DIvidido RAM[%d] (%f) com RAM[%d] (%f) e salvo na RAM[%d] (%f).\n", 0, num1, 1, num2, 2, resultado);
         break;
     default:
-
         printf("Erro grave... finalizando.");
         exit(1);
         break;

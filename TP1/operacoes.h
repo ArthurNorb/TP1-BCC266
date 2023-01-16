@@ -3,6 +3,8 @@
 
 #include "cpu.h"
 
-void multiplicacao(Maquina *);
+float multiplicacao(Maquina *);
+
+float divisao(Maquina *);
 
 #endif // OPERACOES_H
