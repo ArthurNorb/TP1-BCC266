@@ -2,7 +2,6 @@
 #include "cpu.h"
 
 #include <stdio.h>
-#include <math.h>
 
 float multiplicacao(Maquina *maquina)
 {
@@ -40,11 +39,11 @@ float multiplicacao(Maquina *maquina)
 
     if ((num1 < 0 && num2 > 0) || (num1 > 0 && num2 < 0))
         resultado = -resultado;
-
     return resultado;
 }
 
-float divisao(Maquina *maquina)
+// divisão não deu certo =(
+/*float divisao(Maquina *maquina)
 {
     float resultado;
     float num1 = maquina->RAM.enderecos[0];
@@ -70,9 +69,7 @@ float divisao(Maquina *maquina)
 
     float resto = num1_mod;
     float quociente;
-    int contadorDecimais = 0;
-    int k = 0;
-    while ((num1_mod != 0) && (contadorDecimais <= 5))
+    while (num1_mod != 0)
     {
         // adiciona 0 no final do dividendo quando for menor que o divisor
         if (num1_mod < num2_mod)
@@ -84,23 +81,38 @@ float divisao(Maquina *maquina)
             maquina->RAM.enderecos[1] = num2_mod;
             num1_mod = maquina->RAM.enderecos[2];
             maquina->RAM.enderecos[2] = 0; // zera novamente o resultado
-            contadorDecimais++;
-            k++;
-        }
+            }
 
         // procura o valor do quociente
+        float quo1;
         for (int i = 0; i < num1_mod; i++)
         {
-            if (num2_mod * i == num1_mod)
+            maquina->RAM.enderecos[0] = num2_mod;
+            maquina->RAM.enderecos[1] = i;
+            if (multiplicacao(maquina) == num1_mod)
             {
                 quociente = i;
                 resto = 0;
                 break;
             }
-            if (num2_mod * i > num1_mod)
+            if (multiplicacao(maquina) > num1_mod)
             {
-                quociente = i - 1;
-                resto = num1_mod - (num2_mod * quociente);
+                maquina->RAM.enderecos[0] = i;
+                maquina->RAM.enderecos[1] = 1;
+                maquina->instrucoes[0].opcode = 2;
+                roda(maquina);
+                quociente = maquina->RAM.enderecos[2];
+
+                maquina->RAM.enderecos[0] = num2_mod;
+                maquina->RAM.enderecos[1] = quociente;
+                maquina->instrucoes[0].opcode = 1;
+                quo1 = multiplicacao(maquina);
+
+                maquina->RAM.enderecos[0] = num1_mod;
+                maquina->RAM.enderecos[1] = quo1;
+                maquina->instrucoes[0].opcode = 2;
+                roda(maquina);
+                resto = maquina->RAM.enderecos[2];
                 break;
             }
         }
@@ -109,46 +121,34 @@ float divisao(Maquina *maquina)
         printf("%f", resto);
     }
 
-    if (k == 0)
-    {
-        resultado = quociente;
-    }
-    else
-        resultado = quociente * pow(0.1, k);
-
     if ((num1 < 0 && num2 > 0) || (num1 > 0 && num2 < 0))
         resultado = -resultado;
 
     maquina->RAM.enderecos[2] = resultado;
 
     return resultado;
-}
+}*/
 
 float potencia(Maquina *maquina)
 {
-    // multiplicar num1 com o proprio resultado com 1, até atingir seu expoente
-
     float num1 = maquina->RAM.enderecos[0];
     float num2 = maquina->RAM.enderecos[1];
-    int expoente = 0;
     float resultado = 1;
 
     if (num2 == 0)
         return 1;
-    else
+
+    
+    for (int i = 0; i < num2; i++)
     {
-        do
-        {
-            maquina->RAM.enderecos[1] = resultado;
-            resultado = multiplicacao(maquina);
-
-            maquina->RAM.enderecos[0] = expoente;
-            maquina->RAM.enderecos[1] = 1;
-            roda(maquina);
-            expoente = maquina->RAM.enderecos[2];
-
-            maquina->RAM.enderecos[0] = num1;
-        } while (expoente <= num2);
+        maquina->RAM.enderecos[1] = resultado;
+        resultado = maquina->RAM.enderecos[0] * maquina->RAM.enderecos[1];
+        //resultado = multiplicacao(maquina); //função faz literalmente o mesmo que a linha a cima, porém não encontramos a solução para ela parar de dar erro!
     }
+
+    maquina->RAM.enderecos[0] = num1;
+    maquina->RAM.enderecos[1] = num2;
+    maquina->RAM.enderecos[2] = resultado;
+
     return resultado;
 }

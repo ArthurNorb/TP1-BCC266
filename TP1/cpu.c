@@ -85,7 +85,7 @@ void menu(Maquina *maquina, int tamanhoRAM)
     Instrucao *instrucao;
 
     printf("\nMENU:\n\n");
-    printf("Escolha uma opção abaixo:\n0 - Programa Aleatório\n1 - Adição\n2 - Subtração\n3 - Multiplicação\n4 - Divisão\n5 - Potenciação:  ");
+    printf("Escolha uma opção abaixo:\n0 - Programa Aleatório\n1 - Adição\n2 - Subtração\n3 - Multiplicação\n4 - Potenciação:  ");
     scanf("%d", &opcao_menu);
 
     switch (opcao_menu)
@@ -138,21 +138,7 @@ void menu(Maquina *maquina, int tamanhoRAM)
         printf("\n  > Multiplicado RAM[%d] (%f) com RAM[%d] (%f) e salvo na RAM[%d] (%f).\n", 0, num1, 1, num2, 2, resultado);
         break;
 
-    case 4: // Divisão
-        printf("\nDigite os 2 numeros que deseja dividir: ");
-        scanf("%f%f", &num1, &num2);
-
-        instrucao = instrucaoDoUsuario(maquina, 2);
-
-        liga(maquina, instrucao, tamanhoRAM);
-        maquina->RAM.enderecos[0] = num1;
-        maquina->RAM.enderecos[1] = num2;
-        maquina->RAM.enderecos[2] = 0;
-        resultado = divisao(maquina);
-        printf("\n  > Dividido RAM[%d] (%f) com RAM[%d] (%f) e salvo na RAM[%d] (%f).\n\n", 0, num1, 1, num2, 2, resultado);
-        break;
-
-    case 5: // potencia
+    case 4: // potencia
         printf("\nDigite os 2 numeros (base e exponente): ");
         scanf("%f%f", &num1, &num2);
 
