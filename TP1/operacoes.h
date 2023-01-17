@@ -7,4 +7,6 @@ float multiplicacao(Maquina *);
 
 float divisao(Maquina *);
 
+float potencia(Maquina *);
+
 #endif // OPERACOES_H

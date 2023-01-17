@@ -99,7 +99,7 @@ void menu(Maquina *maquina, char **argv)
         tamanhoRAM = atoi(argv[2]);
 
         printf("\nMENU:\n\n");
-        printf("Escolha uma opção abaixo:\n0 - Programa Aleatório\n1 - Adição\n2 - Subtração\n3 - Multiplicação\n4 - Divisão\n");
+        printf("Escolha uma opção abaixo:\n0 - Programa Aleatório\n1 - Adição\n2 - Subtração\n3 - Multiplicação\n4 - Divisão\n5 - Potenciação");
         scanf("%d", &opcao_menu);
 
         switch (opcao_menu)
@@ -117,8 +117,6 @@ void menu(Maquina *maquina, char **argv)
             scanf("%f%f", &num1, &num2);
 
             instrucao = instrucaoDoUsuario(maquina, 1); // recebe instrução do usuário
-            tamanhoRAM = 3;
-
             liga(maquina, instrucao, tamanhoRAM);
             maquina->RAM.enderecos[0] = num1; // altera o conteúdo da RAM
             maquina->RAM.enderecos[1] = num2;
@@ -131,7 +129,6 @@ void menu(Maquina *maquina, char **argv)
             scanf("%f%f", &num1, &num2);
 
             instrucao = instrucaoDoUsuario(maquina, 2);
-            tamanhoRAM = 3;
 
             liga(maquina, instrucao, tamanhoRAM);
             maquina->RAM.enderecos[0] = num1;
@@ -145,7 +142,6 @@ void menu(Maquina *maquina, char **argv)
             scanf("%f%f", &num1, &num2);
 
             instrucao = instrucaoDoUsuario(maquina, 1);
-            tamanhoRAM = 3;
 
             liga(maquina, instrucao, tamanhoRAM);
             maquina->RAM.enderecos[0] = num1;
@@ -161,15 +157,28 @@ void menu(Maquina *maquina, char **argv)
             scanf("%f%f", &num1, &num2);
 
             instrucao = instrucaoDoUsuario(maquina, 2);
-            tamanhoRAM = 3;
+
+            liga(maquina, instrucao, tamanhoRAM);
+            maquina->RAM.enderecos[0] = num1;
+            maquina->RAM.enderecos[1] = num2;
+            maquina->RAM.enderecos[2] = 0;
+            resultado = divisao(maquina);
+            printf("\n  > Dividido RAM[%d] (%f) com RAM[%d] (%f) e salvo na RAM[%d] (%f).\n\n", 0, num1, 1, num2, 2, resultado);
+            break;
+
+        case 5: // potencia
+            printf("\nDigite os 2 numeros (base e exponente): ");
+            scanf("%f%f", &num1, &num2);
+
+            instrucao = instrucaoDoUsuario(maquina, 1);
 
             liga(maquina, instrucao, tamanhoRAM);
             maquina->RAM.enderecos[0] = num1;
             maquina->RAM.enderecos[1] = num2;
             maquina->RAM.enderecos[2] = 0;
             imprimeRAM(maquina);
-            resultado = divisao(maquina);
-            printf("\n  > Dividido RAM[%d] (%f) com RAM[%d] (%f) e salvo na RAM[%d] (%f).\n\n", 0, num1, 1, num2, 2, resultado);
+            resultado = potencia(maquina);
+            printf("\n  > A potência de RAM[%d] (%f) elevado a RAM[%d] (%f) foi salvo na RAM[%d] (%f).\n\n", 0, num1, 1, num2, 2, resultado);
             break;
         default:
             printf("Erro grave... finalizando.");

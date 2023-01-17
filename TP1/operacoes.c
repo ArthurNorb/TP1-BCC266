@@ -118,8 +118,33 @@ float divisao(Maquina *maquina)
 
     if ((num1 < 0 && num2 > 0) || (num1 > 0 && num2 < 0))
         resultado = -resultado;
-    
+
     maquina->RAM.enderecos[2] = resultado;
 
+    return resultado;
+}
+
+float potencia(Maquina *maquina)
+{
+    float num1 = maquina->RAM.enderecos[0];
+    float num2 = maquina->RAM.enderecos[1];
+    int exponente = 0;
+    float resultado = 1;
+
+    while (exponente < num2)
+    {
+        //maquina->RAM.enderecos[0] = num1;
+        //maquina->RAM.enderecos[1] = resultado;
+        resultado = resultado * num1;
+
+        //maquina->RAM.enderecos[0] = exponente;
+        //maquina->RAM.enderecos[1] = 1;
+        //roda(maquina);
+        exponente += 1;
+    }
+
+    maquina->RAM.enderecos[0] = num1;
+    maquina->RAM.enderecos[1] = num2;
+    maquina->RAM.enderecos[2] = resultado;
     return resultado;
 }
